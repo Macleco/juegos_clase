@@ -32,7 +32,7 @@ export function DinosaurDietGame() {
     <DndContext sensors={sensors} onDragStart={() => setDragging(true)} onDragCancel={() => setDragging(false)} onDragEnd={({ over }) => { setDragging(false); if (over?.id === 'herbivore' || over?.id === 'carnivore') classify(over.id) }}>
       <div className="zones"><Zone diet="herbivore" dinosaurs={state.classifiedHerbivores} /><Zone diet="carnivore" dinosaurs={state.classifiedCarnivores} /></div>
       <ProgressIndicator current={12 - state.deck.length} total={12} />
-      <section className="deck" aria-label="Mazo de dinosaurios"><div className="card-back back-one"/><div className="card-back back-two"/>{current && <div className={wrong ? 'wrong' : ''}><Card dinosaur={current} active /></div>}</section>
+      <section className="deck" aria-label="Mazo de dinosaurios"><div className="card-back back-one"/><div className="card-back back-two"/>{current && <div className={`deck-card ${wrong ? 'wrong' : ''}`}><Card dinosaur={current} active /></div>}</section>
       <DragOverlay>{dragging && current ? <Card dinosaur={current} /> : null}</DragOverlay>
     </DndContext>
     {settings && <Modal title="Configuración" onClose={() => setSettings(false)}><p>Panel preparado para futuras opciones de aula.</p><button className="primary-button" onClick={restart}>Reiniciar partida</button></Modal>}
