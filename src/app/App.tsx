@@ -1,7 +1,5 @@
+import { DinosaurDietGame } from '../games/dinosaur-diet/DinosaurDietGame'
+
 export function App() {
-  return (
-    <main>
-      <h1>¿Qué comía cada dinosaurio?</h1>
-    </main>
-  )
+  return <DinosaurDietGame />
 }
