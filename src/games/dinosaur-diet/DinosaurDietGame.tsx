@@ -1,6 +1,6 @@
 import { DndContext, DragOverlay, PointerSensor, useDraggable, useDroppable, useSensor, useSensors } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
-import { Drumstick, Leaf } from 'lucide-react'
+import { Drumstick, Leaf, Pointer } from 'lucide-react'
 import { useState } from 'react'
 import type { Diet, Dinosaur } from '../../data/dinosaurs'
 import { DINOSAURS } from '../../data/dinosaurs'
@@ -19,7 +19,7 @@ function Zone({ diet, dinosaurs }: { diet: Diet; dinosaurs: readonly Dinosaur[] 
   const drop = useDroppable({ id: diet })
   const herbivore = diet === 'herbivore'
   return <section ref={drop.setNodeRef} className={`diet-zone ${diet} ${drop.isOver ? 'over' : ''}`} aria-label={herbivore ? 'Herbívoros' : 'Carnívoros'}>
-    <h2>{herbivore ? <Leaf /> : <Drumstick />} {herbivore ? 'HERBÍVOROS' : 'CARNÍVOROS'}</h2><p>¡Arrastra aquí!</p><div className="classified">{dinosaurs.map(dinosaur => <Card key={dinosaur.id} dinosaur={dinosaur} />)}</div>
+    <h2>{herbivore ? <Leaf aria-hidden="true" /> : <Drumstick aria-hidden="true" />} {herbivore ? 'HERBÍVOROS' : 'CARNÍVOROS'}</h2><div className="classified">{dinosaurs.map(dinosaur => <Card key={dinosaur.id} dinosaur={dinosaur} />)}</div>
   </section>
 }
 export function DinosaurDietGame() {
@@ -31,8 +31,11 @@ export function DinosaurDietGame() {
   return <main className="game-shell"><GameHeader onHome={restart} onRestart={restart} onSettings={() => setSettings(true)} />
     <DndContext sensors={sensors} onDragStart={() => setDragging(true)} onDragCancel={() => setDragging(false)} onDragEnd={({ over }) => { setDragging(false); if (over?.id === 'herbivore' || over?.id === 'carnivore') classify(over.id) }}>
       <div className="zones"><Zone diet="herbivore" dinosaurs={state.classifiedHerbivores} /><Zone diet="carnivore" dinosaurs={state.classifiedCarnivores} /></div>
-      <ProgressIndicator current={12 - state.deck.length} total={12} />
-      <section className="deck" aria-label="Mazo de dinosaurios"><div className="card-back back-one"/><div className="card-back back-two"/>{current && <div className={`deck-card ${wrong ? 'wrong' : ''}`}><Card dinosaur={current} active /></div>}</section>
+      <div className="game-bottom">
+        <aside className="drag-instruction" aria-label="Instrucciones de juego"><Pointer aria-hidden="true" /><span>Arrastra<br />el dinosaurio</span></aside>
+        <section className="deck" aria-label="Mazo de dinosaurios"><div className="card-back back-one"/><div className="card-back back-two"/>{current && <div className={`deck-card ${wrong ? 'wrong' : ''}`}><Card dinosaur={current} active /></div>}</section>
+        <ProgressIndicator current={12 - state.deck.length} total={12} />
+      </div>
       <DragOverlay>{dragging && current ? <Card dinosaur={current} /> : null}</DragOverlay>
     </DndContext>
     {settings && <Modal title="Configuración" onClose={() => setSettings(false)}><p>Panel preparado para futuras opciones de aula.</p><button className="primary-button" onClick={restart}>Reiniciar partida</button></Modal>}

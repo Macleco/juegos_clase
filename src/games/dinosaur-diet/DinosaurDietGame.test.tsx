@@ -9,4 +9,11 @@ describe('DinosaurDietGame', () => {
     expect(screen.getByTestId('active-dinosaur-card').parentElement).toHaveClass('deck-card')
     expect(screen.getByText('0 / 12')).toBeInTheDocument()
   })
+
+  it('shows a single drag instruction beside the dinosaur deck', () => {
+    render(<DinosaurDietGame />)
+
+    expect(screen.getByRole('complementary', { name: /instrucciones de juego/i })).toHaveTextContent(/arrastra\s*el dinosaurio/i)
+    expect(screen.queryByText('¡Arrastra aquí!')).not.toBeInTheDocument()
+  })
 })
