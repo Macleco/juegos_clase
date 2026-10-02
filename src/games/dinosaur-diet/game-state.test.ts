@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { DINOSAURS } from '../../data/dinosaurs'
-import { classifyCurrentCard, createGameState, shuffle } from './game-state'
+import { classifyCurrentCard, createGameState, selectRound, shuffle } from './game-state'
 
 describe('dinosaur diet game rules', () => {
   it('contains twelve dinosaurs split evenly by diet', () => {
@@ -36,6 +36,15 @@ describe('dinosaur diet game rules', () => {
     expect(shuffled).not.toBe(DINOSAURS)
   })
 
+  it('selects eight distinct dinosaurs balanced across both diets', () => {
+    const round = selectRound(DINOSAURS)
+
+    expect(round).toHaveLength(8)
+    expect(new Set(round.map(({ id }) => id))).toHaveLength(8)
+    expect(round.filter(({ diet }) => diet === 'herbivore')).toHaveLength(4)
+    expect(round.filter(({ diet }) => diet === 'carnivore')).toHaveLength(4)
+  })
+
   it('moves the current dinosaur to its matching collection', () => {
     const state = createGameState([DINOSAURS[0]])
     const result = classifyCurrentCard(state, DINOSAURS[0].diet)
@@ -53,9 +62,10 @@ describe('dinosaur diet game rules', () => {
     expect(result.state.classifiedHerbivores).toEqual([])
   })
 
-  it('completes after all twelve dinosaurs are correctly classified', () => {
-    let state = createGameState(DINOSAURS)
-    for (const dinosaur of DINOSAURS) state = classifyCurrentCard(state, dinosaur.diet).state
+  it('completes after every dinosaur in the round is correctly classified', () => {
+    const round = selectRound(DINOSAURS)
+    let state = createGameState(round)
+    for (const dinosaur of round) state = classifyCurrentCard(state, dinosaur.diet).state
     expect(state.completed).toBe(true)
     expect(state.deck).toHaveLength(0)
   })

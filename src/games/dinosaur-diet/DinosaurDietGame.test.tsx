@@ -9,7 +9,7 @@ describe('DinosaurDietGame', () => {
     expect(screen.getAllByTestId('active-dinosaur-card')).toHaveLength(1)
     expect(activeCard.parentElement).toHaveClass('deck-card')
     expect(within(activeCard).getByRole('img')).toHaveAttribute('src', expect.stringMatching(/^\/dinos\/.+\.jpg$/))
-    expect(screen.getByText('0 / 12')).toBeInTheDocument()
+    expect(screen.getByText('0 / 8')).toBeInTheDocument()
   })
 
   it('shows a single drag instruction beside the dinosaur deck', () => {

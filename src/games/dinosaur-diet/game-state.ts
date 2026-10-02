@@ -21,6 +21,16 @@ export function shuffle<T>(items: readonly T[]): T[] {
   return result
 }
 
+export function selectRound(dinosaurs: readonly Dinosaur[]): Dinosaur[] {
+  const herbivores = dinosaurs.filter(({ diet }) => diet === 'herbivore')
+  const carnivores = dinosaurs.filter(({ diet }) => diet === 'carnivore')
+
+  return shuffle([
+    ...shuffle(herbivores).slice(0, 4),
+    ...shuffle(carnivores).slice(0, 4),
+  ])
+}
+
 export function createGameState(deck: readonly Dinosaur[]): GameState {
   return {
     deck: [...deck],
