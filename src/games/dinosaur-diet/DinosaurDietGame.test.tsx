@@ -15,7 +15,7 @@ describe('DinosaurDietGame', () => {
   it('shows a single drag instruction beside the dinosaur deck', () => {
     render(<DinosaurDietGame />)
 
-    expect(screen.getByRole('complementary', { name: /instrucciones de juego/i })).toHaveTextContent(/arrastra\s*el dinosaurio/i)
+    expect(screen.getByRole('complementary', { name: /instrucciones de juego/i })).toHaveTextContent(/ARRASTRA\s*EL DINOSAURIO/)
     expect(screen.queryByText('¡Arrastra aquí!')).not.toBeInTheDocument()
   })
 })

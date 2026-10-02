@@ -32,7 +32,7 @@ export function DinosaurDietGame() {
     <DndContext sensors={sensors} onDragEnd={({ over }) => { if (over?.id === 'herbivore' || over?.id === 'carnivore') classify(over.id) }}>
       <div className="zones"><Zone diet="herbivore" dinosaurs={state.classifiedHerbivores} /><Zone diet="carnivore" dinosaurs={state.classifiedCarnivores} /></div>
       <div className="game-bottom">
-        <aside className="drag-instruction" aria-label="Instrucciones de juego"><Pointer aria-hidden="true" /><span>Arrastra<br />el dinosaurio</span></aside>
+        <aside className="drag-instruction" aria-label="Instrucciones de juego"><Pointer aria-hidden="true" /><span>ARRASTRA<br />EL DINOSAURIO</span></aside>
         <section className="deck" aria-label="Mazo de dinosaurios"><div className="card-back back-one"/><div className="card-back back-two"/>{current && <div className={`deck-card ${wrong ? 'wrong' : ''}`}><Card dinosaur={current} active /></div>}</section>
         <ProgressIndicator current={total - state.deck.length} total={total} />
       </div>
