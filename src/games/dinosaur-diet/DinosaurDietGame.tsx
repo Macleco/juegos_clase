@@ -1,4 +1,4 @@
-import { DndContext, DragOverlay, PointerSensor, useDraggable, useDroppable, useSensor, useSensors } from '@dnd-kit/core'
+import { DndContext, PointerSensor, useDraggable, useDroppable, useSensor, useSensors } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { Drumstick, Leaf, Pointer } from 'lucide-react'
 import { useState } from 'react'
@@ -24,19 +24,18 @@ function Zone({ diet, dinosaurs }: { diet: Diet; dinosaurs: readonly Dinosaur[] 
 }
 export function DinosaurDietGame() {
   const [state, setState] = useState(() => createGameState(shuffle(DINOSAURS)))
-  const [settings, setSettings] = useState(false); const [celebrate, setCelebrate] = useState(false); const [dragging, setDragging] = useState(false); const [wrong, setWrong] = useState(false)
+  const [settings, setSettings] = useState(false); const [celebrate, setCelebrate] = useState(false); const [wrong, setWrong] = useState(false)
   const current = state.deck[0]; const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
   const restart = () => { setState(createGameState(shuffle(DINOSAURS))); setCelebrate(false); setSettings(false) }
   const classify = (target: Diet) => { const result = classifyCurrentCard(state, target); if (!result.accepted) { setWrong(true); window.setTimeout(() => setWrong(false), 450); return }; setState(result.state); if (result.state.completed) window.setTimeout(() => setCelebrate(true), 350) }
   return <main className="game-shell"><GameHeader onHome={restart} onRestart={restart} onSettings={() => setSettings(true)} />
-    <DndContext sensors={sensors} onDragStart={() => setDragging(true)} onDragCancel={() => setDragging(false)} onDragEnd={({ over }) => { setDragging(false); if (over?.id === 'herbivore' || over?.id === 'carnivore') classify(over.id) }}>
+    <DndContext sensors={sensors} onDragEnd={({ over }) => { if (over?.id === 'herbivore' || over?.id === 'carnivore') classify(over.id) }}>
       <div className="zones"><Zone diet="herbivore" dinosaurs={state.classifiedHerbivores} /><Zone diet="carnivore" dinosaurs={state.classifiedCarnivores} /></div>
       <div className="game-bottom">
         <aside className="drag-instruction" aria-label="Instrucciones de juego"><Pointer aria-hidden="true" /><span>Arrastra<br />el dinosaurio</span></aside>
         <section className="deck" aria-label="Mazo de dinosaurios"><div className="card-back back-one"/><div className="card-back back-two"/>{current && <div className={`deck-card ${wrong ? 'wrong' : ''}`}><Card dinosaur={current} active /></div>}</section>
         <ProgressIndicator current={12 - state.deck.length} total={12} />
       </div>
-      <DragOverlay>{dragging && current ? <Card dinosaur={current} /> : null}</DragOverlay>
     </DndContext>
     {settings && <Modal title="Configuración" onClose={() => setSettings(false)}><p>Panel preparado para futuras opciones de aula.</p><button className="primary-button" onClick={restart}>Reiniciar partida</button></Modal>}
     {celebrate && <Modal title="🎉 ¡Muy bien! 🎉" onClose={() => setCelebrate(false)}><p>¡Has clasificado todos los dinosaurios!</p><button className="primary-button" onClick={restart}>Jugar otra vez</button></Modal>}
