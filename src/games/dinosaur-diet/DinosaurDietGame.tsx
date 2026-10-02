@@ -12,7 +12,7 @@ import { classifyCurrentCard, createGameState, shuffle } from './game-state'
 function Card({ dinosaur, active = false }: { dinosaur: Dinosaur; active?: boolean }) {
   const draggable = useDraggable({ id: dinosaur.id, disabled: !active })
   return <article ref={draggable.setNodeRef} {...draggable.listeners} {...draggable.attributes} data-testid={active ? 'active-dinosaur-card' : undefined} className={`dino-card ${active ? 'active-card' : ''}`} style={active ? { transform: CSS.Translate.toString(draggable.transform) } : undefined}>
-    <div className="dino-placeholder" aria-hidden="true">🦕</div><strong>{dinosaur.name}</strong>
+    <img className="dino-image" src={dinosaur.image} alt={`Fotografía de ${dinosaur.name}`} /><strong>{dinosaur.name}</strong>
   </article>
 }
 function Zone({ diet, dinosaurs }: { diet: Diet; dinosaurs: readonly Dinosaur[] }) {
