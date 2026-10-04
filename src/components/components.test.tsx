@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -6,6 +9,12 @@ import { Modal } from './Modal'
 import { ProgressIndicator } from './ProgressIndicator'
 
 describe('classroom UI primitives', () => {
+  it('keeps the home control fitted to its icon in the header grid', () => {
+    const styles = readFileSync(resolve(process.cwd(), 'src/styles/index.css'), 'utf8')
+
+    expect(styles).toMatch(/\.home-button\s*\{[^}]*justify-self\s*:\s*start/)
+  })
+
   it('renders labelled teacher controls', () => {
     render(<GameHeader onHome={vi.fn()} onRestart={vi.fn()} onSettings={vi.fn()} />)
     expect(screen.getByRole('button', { name: /reiniciar/i })).toBeEnabled()
