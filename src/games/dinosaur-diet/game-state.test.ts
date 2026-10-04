@@ -10,22 +10,22 @@ describe('dinosaur diet game rules', () => {
     expect(DINOSAURS.filter(({ diet }) => diet === 'carnivore')).toHaveLength(6)
   })
 
-  it('assigns a unique public photograph to every dinosaur', () => {
+  it('assigns a unique site-relative public photograph to every dinosaur', () => {
     const images = DINOSAURS.map(({ image }) => image)
 
     expect(images).toEqual([
-      '/dinos/triceratops.jpg',
-      '/dinos/diplodocus.jpg',
-      '/dinos/pachycephalosaurus.jpg',
-      '/dinos/stegosaurus.jpg',
-      '/dinos/ankylosaurus.jpg',
-      '/dinos/parasaurolophus.jpg',
-      '/dinos/tyrannosaurus-rex.jpg',
-      '/dinos/velociraptor.jpg',
-      '/dinos/spinosaurus.jpg',
-      '/dinos/giganotosaurus.jpg',
-      '/dinos/carnotaurus.jpg',
-      '/dinos/dilophosaurus.jpg',
+      'dinos/triceratops.jpg',
+      'dinos/diplodocus.jpg',
+      'dinos/pachycephalosaurus.jpg',
+      'dinos/stegosaurus.jpg',
+      'dinos/ankylosaurus.jpg',
+      'dinos/parasaurolophus.jpg',
+      'dinos/tyrannosaurus-rex.jpg',
+      'dinos/velociraptor.jpg',
+      'dinos/spinosaurus.jpg',
+      'dinos/giganotosaurus.jpg',
+      'dinos/carnotaurus.jpg',
+      'dinos/dilophosaurus.jpg',
     ])
     expect(new Set(images).size).toBe(12)
   })
