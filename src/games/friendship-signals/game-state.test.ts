@@ -7,7 +7,7 @@ describe('friendship signals game rules', () => {
   it('keeps situations in the three safety signals', () => {
     expect(FRIENDSHIP_SITUATIONS.filter(({ signal }) => signal === 'green')).toHaveLength(4)
     expect(FRIENDSHIP_SITUATIONS.filter(({ signal }) => signal === 'yellow')).toHaveLength(4)
-    expect(FRIENDSHIP_SITUATIONS.filter(({ signal }) => signal === 'red')).toHaveLength(7)
+    expect(FRIENDSHIP_SITUATIONS.filter(({ signal }) => signal === 'red')).toHaveLength(6)
     expect(FRIENDSHIP_SITUATIONS.map(({ id }) => id)).toContain('cromos')
   })
 
@@ -31,7 +31,7 @@ describe('friendship signals game rules', () => {
   it('creates a round with every situation', () => {
     const round = selectRound(FRIENDSHIP_SITUATIONS)
 
-    expect(round).toHaveLength(15)
-    expect(new Set(round.map(({ id }) => id))).toHaveLength(15)
+    expect(round).toHaveLength(14)
+    expect(new Set(round.map(({ id }) => id))).toHaveLength(14)
   })
 })
