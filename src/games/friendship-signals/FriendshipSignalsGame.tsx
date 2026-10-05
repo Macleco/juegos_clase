@@ -9,10 +9,10 @@ import { Modal } from '../../components/Modal'
 import { ProgressIndicator } from '../../components/ProgressIndicator'
 import { classifyCurrentCard, createGameState, selectRound } from './game-state'
 
-const signalDetails: Record<FriendshipSignal, { title: string; description: string; icon: typeof Check }> = {
-  green: { title: 'ESTÁ BIEN', description: 'Me siento bien y seguro/a.', icon: Check },
-  yellow: { title: 'NO ME GUSTA', description: 'Lo digo y pido que pare.', icon: Hand },
-  red: { title: 'TENGO QUE PARAR', description: 'Me alejo y pido ayuda.', icon: OctagonAlert },
+const signalDetails: Record<FriendshipSignal, { title: string; icon: typeof Check }> = {
+  green: { title: 'ESTÁ BIEN', icon: Check },
+  yellow: { title: 'NO ME GUSTA', icon: Hand },
+  red: { title: 'TENGO QUE PARAR', icon: OctagonAlert },
 }
 
 function Card({ situation, active = false }: { situation: FriendshipSituation; active?: boolean }) {
@@ -22,9 +22,9 @@ function Card({ situation, active = false }: { situation: FriendshipSituation; a
 
 function Zone({ signal, situations }: { signal: FriendshipSignal; situations: readonly FriendshipSituation[] }) {
   const drop = useDroppable({ id: signal })
-  const { title, description, icon: Icon } = signalDetails[signal]
+  const { title, icon: Icon } = signalDetails[signal]
   return <section ref={drop.setNodeRef} className={`signal-zone signal-${signal} ${drop.isOver ? 'over' : ''}`} aria-label={title}>
-    <h2><Icon aria-hidden="true" /> {title}</h2><p>{description}</p><div className="classified">{situations.map(situation => <Card key={situation.id} situation={situation} />)}</div>
+    <h2><Icon aria-hidden="true" /> {title}</h2><div className="classified">{situations.map(situation => <Card key={situation.id} situation={situation} />)}</div>
   </section>
 }
 
