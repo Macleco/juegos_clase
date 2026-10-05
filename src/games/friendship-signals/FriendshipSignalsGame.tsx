@@ -17,7 +17,7 @@ const signalDetails: Record<FriendshipSignal, { title: string; description: stri
 
 function Card({ situation, active = false }: { situation: FriendshipSituation; active?: boolean }) {
   const draggable = useDraggable({ id: situation.id, disabled: !active })
-  return <article ref={draggable.setNodeRef} {...draggable.listeners} {...draggable.attributes} data-testid={active ? 'active-situation-card' : undefined} className={`situation-card ${active ? 'active-card' : ''}`} style={active ? { transform: CSS.Translate.toString(draggable.transform) } : undefined}><strong>{situation.text}</strong></article>
+  return <article ref={draggable.setNodeRef} {...draggable.listeners} {...draggable.attributes} data-testid={active ? 'active-situation-card' : undefined} className={`situation-card ${active ? 'active-card' : ''}`} style={active ? { transform: CSS.Translate.toString(draggable.transform) } : undefined}><img className="situation-image" src={situation.image} alt={`Ilustración: ${situation.text}`} /><strong>{situation.text}</strong></article>
 }
 
 function Zone({ signal, situations }: { signal: FriendshipSignal; situations: readonly FriendshipSituation[] }) {

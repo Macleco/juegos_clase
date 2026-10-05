@@ -5,9 +5,10 @@ import { classifyCurrentCard, createGameState, selectRound } from './game-state'
 
 describe('friendship signals game rules', () => {
   it('keeps situations in the three safety signals', () => {
-    expect(FRIENDSHIP_SITUATIONS.filter(({ signal }) => signal === 'green')).toHaveLength(3)
-    expect(FRIENDSHIP_SITUATIONS.filter(({ signal }) => signal === 'yellow')).toHaveLength(3)
-    expect(FRIENDSHIP_SITUATIONS.filter(({ signal }) => signal === 'red')).toHaveLength(3)
+    expect(FRIENDSHIP_SITUATIONS.filter(({ signal }) => signal === 'green')).toHaveLength(4)
+    expect(FRIENDSHIP_SITUATIONS.filter(({ signal }) => signal === 'yellow')).toHaveLength(4)
+    expect(FRIENDSHIP_SITUATIONS.filter(({ signal }) => signal === 'red')).toHaveLength(7)
+    expect(FRIENDSHIP_SITUATIONS.map(({ id }) => id)).toContain('cromos')
   })
 
   it('moves a situation only to its matching signal', () => {
@@ -30,7 +31,7 @@ describe('friendship signals game rules', () => {
   it('creates a round with every situation', () => {
     const round = selectRound(FRIENDSHIP_SITUATIONS)
 
-    expect(round).toHaveLength(9)
-    expect(new Set(round.map(({ id }) => id))).toHaveLength(9)
+    expect(round).toHaveLength(15)
+    expect(new Set(round.map(({ id }) => id))).toHaveLength(15)
   })
 })
