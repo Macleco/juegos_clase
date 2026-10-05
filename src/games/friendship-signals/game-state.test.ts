@@ -11,6 +11,10 @@ describe('friendship signals game rules', () => {
     expect(FRIENDSHIP_SITUATIONS.map(({ id }) => id)).toContain('cromos')
   })
 
+  it('labels the yellow molestar situation with a concise message', () => {
+    expect(FRIENDSHIP_SITUATIONS.find(({ id }) => id === 'molestar-fuerte')?.text).toBe('Me molestan')
+  })
+
   it('moves a situation only to its matching signal', () => {
     const situation = FRIENDSHIP_SITUATIONS[0]
     const result = classifyCurrentCard(createGameState([situation]), 'green')
