@@ -13,6 +13,7 @@ describe('App', () => {
 
     expect(screen.getByRole('heading', { name: /elige un juego/i })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /qué comía cada dinosaurio/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /señales de mis amistades/i })).toBeInTheDocument()
   })
 
   it('opens the dinosaur game from the menu and returns home', () => {
@@ -27,5 +28,14 @@ describe('App', () => {
 
     expect(screen.getByRole('heading', { name: /elige un juego/i })).toBeInTheDocument()
     expect(window.location.hash).toBe('')
+  })
+
+  it('opens the friendship signals game from the menu', () => {
+    render(<App />)
+
+    fireEvent.click(screen.getByRole('button', { name: /señales de mis amistades/i }))
+
+    expect(screen.getByRole('heading', { name: /señales de mis amistades/i })).toBeInTheDocument()
+    expect(window.location.hash).toBe('#/friendship-signals')
   })
 })
